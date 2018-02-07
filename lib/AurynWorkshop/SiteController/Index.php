@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace AurynWorkshop\SiteController;
 
-use AurynWorkshop\AdminSession;
+
 use AurynWorkshop\SessionRender;
 use AurynWorkshop\Response\HtmlResponse;
 
 class Index
 {
-    public function foo(SessionRender $sessionRender)
+    public function get(SessionRender $sessionRender)
     {
-        $html = $sessionRender->render('pages/page1.html');
+        $html = $sessionRender->render('pages/index.html');
+
+
+
         return new HtmlResponse($html);
     }
 }

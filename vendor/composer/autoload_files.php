@@ -11,5 +11,6 @@ return array(
     '253c157292f75eb38082b5acb06f3f01' => $vendorDir . '/nikic/fast-route/src/functions.php',
     '5255c38a0faeba867671b61dfda6d864' => $vendorDir . '/paragonie/random_compat/lib/random.php',
     'c7a1089ba35f8274cf630debb7de059c' => $vendorDir . '/ezimuel/php-secure-session/bin/register_secure_session.php',
+    '600384842fa3ac618ad1693372d5557f' => $baseDir . '/lib/bootstrap.php',
     'a13625b0b50fbf6c65490231df38b04b' => $baseDir . '/lib/functions.php',
 );

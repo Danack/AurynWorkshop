@@ -1,0 +1,2094 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Auryn workshop</title>
+
+        <meta name="description" content="Danack talking about interface segregation">
+        <meta name="author" content="Dan Ackroyd">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <!-- link rel="stylesheet" href="css/theme/black.css" id="theme" -->
+        <link rel="stylesheet" href="css/theme/whiteDanack.css" id="themecss">
+        <!-- <link rel="stylesheet" href="lib/css/vsdanack.css" id="codeststylecss"> -->
+        <link rel="stylesheet" href="lib/css/zenburn_backup.css" id="codeststylecss">
+      
+        <style type="text/css">
+        /* overrides */
+        
+
+        body {
+            background: #a8fcfc;
+            /* background: -moz-radial-gradient(center, circle cover, #ffffff 0%, #1f1f1f 100%);
+            background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #555a5f), color-stop(100%, #1f1f1f));*/
+            background: -webkit-radial-gradient(center, circle cover, #f2f3ff 45%, rgba(36, 133, 245, 0.21) 75%);
+            /* background: -o-radial-gradient(center, circle cover, #ffffff 0%, #efefef 100%);
+            background: -ms-radial-gradient(center, circle cover, #ffffff 0%, #efefef 100%); */
+            /* background: radial-gradient(center, circle cover, #ffffff 0%, #7f7f7f 100%); */
+            /*background-color: #fdfdfd; */
+        }
+        .reveal section img {
+            border: 0;
+            background: none;
+            box-shadow: 0 0 #000;
+        }
+        .reveal pre {
+            width: 99%;
+            font-size: 0.68em;
+            margin-left: 0px;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+          
+            /* box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.7); */
+        }
+        
+        /* 
+        .reveal pre {
+          box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        */
+        
+        .preformatted {
+          font-family: monospace;
+          white-space: pre;
+      }
+
+        .spaceTop {
+            margin-top: 50px !important;
+        }
+        .spaceBottom {
+            margin-bottom: 50px !important;
+        }
+
+        h2, p, section { text-align: left; }
+        .reveal .slides {text-align: left; }
+        
+        
+        h1, h2, h3, h4, h5 {
+            font-family: "Quicksand", sans-serif !important;
+            font-weight: 200 !important;
+            /*text-transform: uppercase; */
+        }
+            
+        .embiggen { 
+            font-size: 1.2em !important;  
+        }
+        .emlargen {
+            font-size: 1.05em !important;
+        }
+        
+        .emnormal {
+          font-size: 0.9em !important;
+        }
+        
+        .emsmallen { 
+            font-size: 0.8em !important;  
+        }
+        .em_075 {
+          font-size: 0.75em !important;
+        }
+        .em_08 {
+          font-size: 0.8em !important;
+        }
+        .em_085 {
+          font-size: 0.9em !important;
+        }
+        .em_09 {
+          font-size: 0.9em !important;
+        }
+        .em_095 {
+          font-size: 0.95em !important;
+        }
+        .em1 {
+          font-size: 1.0em !important;  
+        }
+        .em1_1 {
+          font-size: 1.1em !important;  
+        }
+        
+        .em1_05 {
+          font-size: 1.05em !important;  
+        }
+        .em1_1 {
+          font-size: 1.1em !important;  
+        }
+        .em1_5 {
+          font-size: 1.5em !important;  
+        }
+        .em1_2 {
+          font-size: 1.2em !important;  
+        }
+        .em1_3 {
+          font-size: 1.3em !important;  
+        }
+        .em1_4 {
+          font-size: 1.4em !important;  
+        }
+        
+        .em1_6 {
+          font-size: 1.6em !important;  
+        }
+        .em1_8 {
+          font-size: 1.8em !important;  
+        }
+        
+        
+        .em2 {
+          font-size: 2em !important;  
+        }
+        
+        .em2_4 {
+          font-size: 2.4em !important;  
+        }
+        .em3 {
+          font-size: 3em !important;  
+        }
+        th {
+          font-size: 1.5em !important;
+        }
+        
+        .finale {
+            font-size: 148px !important; 
+            text-align: center !important;
+            /* margin-bottom: 148px !important; */
+        }
+        .speaker-controls-notes > ul, 
+        .speaker-controls-notes ul, 
+        .notes > ul,
+        .notes  ul{
+          margin-top: 0px;
+          margin-bottom: 0px;
+        }
+        
+        .centre {
+            text-align: center !important;
+        }
+        
+        .subtle {
+            color: #7c7c7c;
+        }
+        
+        .smallText {
+            font-size: 24px !important;
+        }
+        
+        blockquote {
+            background-color: #f5f5f5;
+        }
+        
+        blockquote {
+            width: 90% !important;
+            font-size: 36px !important;
+        }
+            
+        pre, .danackCode {
+            font-size: 26px;
+        }
+
+        .rotate {
+            /* Safari */
+            -webkit-transform: rotate(-90deg);
+            
+            /* Firefox */
+            -moz-transform: rotate(-90deg);
+            
+            /* IE */
+            -ms-transform: rotate(-90deg);
+            
+            /* Opera */
+            -o-transform: rotate(-90deg);
+            
+            /* Internet Explorer */
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+        }
+        
+        </style>
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+        <script src="./plugin/jquery/jquery.min.js"></script>
+    </head>
+
+    <body>
+      <div class="reveal">
+        <div class="slides">
+
+<!-- *************************** -->
+<section class="em1_4">
+    <h1>Auryn workshop</h1>
+    <h3>The forgotten i in SOLID</h3>
+    <p>
+        <a href="http://twitter.com/MrDanack">@MrDanack</a>
+    </p>
+    <p class="subtle" style="padding-top: 100px">
+      <small>Press 'c' to toggle code style</small><br/>
+      <small>Press 's' for speaker notes</small>
+    </p>
+    <p>
+      <a href="https://joind.in/talk/04aa0">https://joind.in/talk/04aa0</a>
+    </p>
+</section>
+
+
+<!-- *************************** -->
+
+<section class="em1_4">
+  <h1>SOLID principles</h1>
+
+  <table width="100%">
+    
+  <tr>
+    <td>
+      Single responsibility
+    </td>
+    <td>
+      <span class="fragment" data-fragment-index="1">★★★★★</span>
+    </td>
+  </tr>
+    
+    <tr>
+      <td>
+        Open/closed
+      </td>
+      <td>
+        <span class="fragment" data-fragment-index="1">wat</span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Liskov substitution 
+      </td>
+      <td>
+        <span class="fragment" data-fragment-index="1">★★★★</span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Interface segregation 
+      </td>
+      <td>
+        <span class="fragment" data-fragment-index="1">★</span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Dependency inversion 
+      </td>
+      <td>
+        <span class="fragment" data-fragment-index="1">★★★</span>
+      </td>
+    </tr>  
+   </table>
+  
+  
+  
+  <p class="fragment" data-fragment-index="1" style="padding-top: 50px">
+    If you don't recognise these.....then reading up on the others can be your homework.
+  </p>
+
+  <aside class="notes">
+    <ul>
+     <li></li>
+    </ul>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<!-- 
+<section>
+  <h2 class="spaceBottom">Question Policy</h2>
+  <p>
+    If you did not understand what I said or what I'm talking about, simply raise your hand.
+  </p>
+</section>
+
+-->
+
+<section class="em1_6">
+  <p>Maintainer of Imagick and Gmagick extensions. 
+  </p>
+
+
+  <p>PHP RFCs:<br/>
+    <a href="https://wiki.php.net/rfc/internal_constructor_behaviour">Constructor behaviour of internal classes</a> - PHP 7.0<br/>
+    <a href="https://wiki.php.net/rfc/closurefromcallable">Closure from callable</a> - PHP 7.1<br/>
+    <a href="https://wiki.php.net/rfc/get_class_disallow_null_parameter">get_class() disallow null</a> - in voting!<br/>
+    <a href="https://wiki.php.net/rfc/consistent_callables">Consistent Callables</a> - PHP 8.0?<br/>
+  </p>
+  
+  <p>
+    Want help drafting an RFC - talk to me!
+  </p>
+  
+  <aside class="notes">
+    <ul>
+      <li>I've been told it's important to tell people who am I, to make myself seem more authorative.</li>
+      <li>Open invitation - if anyone wants help writing an RFC, either just drafting the RFC on the wiki, or how to frame an idea to have it be well received by internals, give me a shout.</li>
+      <li>I've done this for a couple of people and while it doesn't </li>
+    </ul>
+  </aside>
+  
+
+</section>
+
+<!-- *************************** -->
+
+<section>
+    <img src="/images/trustworthiness_of_beards_fit.jpg" style="width: 100%" /><br/>
+  
+  <span class="em_075">Designed by Matt McInerney of pixelspread.com</span>
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <h1 class="spaceBottom">What is interface segregation?</h1>
+  <span style="height: 50%">&nbsp;</span>
+  <blockquote class="spaceBottom em2">
+      “many client-specific interfaces are better than one general-purpose interface.”
+  </blockquote>
+  
+  <aside class="notes">
+    <p>
+   "The idea is simple, instead of passing around big classes, we create small interfaces that have a more specific meaning."
+    </p>
+    <p>
+      Using "interface segregation" leads to several benefits.
+    </p>
+  </aside>
+</section>
+
+
+
+<section class="centre em2">
+  <ul>
+    <li>Easier to test</li>
+    <li class="fragment">Makes you more productive…</li>
+    <li class="fragment">…after doing some setup work</li>
+    <li class="fragment">More reasonable code</li>
+  </ul>
+</section>
+
+<!-- *************************** -->
+<section class="embiggen">
+    <table style="width: 100%;" class="embiggen">
+        <thead>
+        <tr>
+            <th>Reasonable</th>
+            <th style="height: 50px"><span>&nbsp;</span></th>
+            <th>Understandable</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="fragment">
+            <td>Obvious from reading the code</td>
+            <td></td>
+            <td>Documentation / colleague can explain how it works</td>
+        </tr>
+    </table>
+  
+  <aside class="notes">
+  <p>
+    These two things are not the same - I think making code be easy to reason about, is more important than making code be just understandable. 
+  </p>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+
+<pre class="danackCode em1_2" data-trim>
+<code class="php" data-trim>
+class MySQLi {
+    function __construct($host, $username, $password,
+        $dbname, $port) { ... }
+}  
+</code>
+</pre>
+  
+<pre class="danackCode em1_2 fragment" data-trim>
+<code class="php" data-trim>
+class S3Client { 
+    static function factory(array $config) { ... }
+}
+</code>
+</pre>
+  
+  
+  <aside class="notes">
+  </aside>
+  
+</section>
+
+
+<!-- *************************** -->
+<section class="embiggen">
+    <table style="width: 100%;" class="embiggen">
+        <thead>
+        <tr>
+            <th>Reasonable</th>
+            <th style="height: 50px"><span>&nbsp;</span></th>
+            <th>Understandable</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Errors happen at boundaries of execution</td>
+            <td></td>
+            <td>Errors can happen during middle of execution</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <pre class="danackCode em1_3" data-trim>
+<code class="php" data-trim>
+class MySQLi {
+  function __construct($host, $username, $password,
+        $dbname, $port) {...}
+}  
+  
+//oops - forget to set password, dbname and port
+$db = new MySQLi('localhost', 'db_user');
+  </code>
+  </pre>
+  <aside class="notes">
+  </aside>
+  
+</section>
+
+
+<section>
+<pre class="danackCode em1_4" data-trim>
+<code class="php">
+class S3Client { 
+    static function factory(array $config) { ... }
+}
+  
+// Spelling is hard
+$config['passwrod'] = '12345';
+S3Client::factory($config)
+</code>
+</pre>
+  
+  
+  <aside class="notes">
+    <ul>
+      <li>This will not error on the line where the error occurs.</li>
+      <li>The error will happen elsewhere and we'll need to work back to understand where the error orginated from.</li>
+      
+    </ul>
+  </aside>
+  
+</section>
+
+
+
+
+<!-- *************************** -->
+<section class="embiggen">
+    <table style="width: 100%;" class="embiggen">
+        <thead>
+        <tr>
+            <th>Reasonable</th>
+            <th style="height: 50px"><span>&nbsp;</span></th>
+            <th>Understandable</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Simpler parts, more of them</td>
+            <td></td>
+            <td>Fewer parts, but more complex code</td>
+        </tr>
+        </tbody>
+    </table>
+  
+  <aside class="notes">
+  <p>
+    The rest of the talk is going to demonstrate this amply.
+  </p>
+  <p>
+    What we're going to do is factor some code using the principle of interface segregation.
+  </p>
+ 
+
+  </aside>
+</section>
+
+<!-- *************************** -->
+<section>
+    <h1 class="finale">We're going to refactor some code!</h1>
+
+  <aside class="notes">
+  
+    But just before we do that - I'd like to make it clear what I mean when I use the phrase 'mock objects', as I'm going to ask a question in a couple of minutes that depends on you knowing what they are.   
+ 
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+    <h2>Mock objects allow easier testing</h2>
+<pre class="danackCode em1_4" data-trim>
+<code class="php" data-trim>
+function testFoo()
+{
+   $mock = Mockery::mock(Request::class);
+      ->shouldReceive('getUri')
+      ->andReturn('/search')
+      ->getMock();
+  
+    foo($mockObject);
+    // If foo doesn't call '$mock->getUri()'
+    // the test will fail
+}
+</code></pre>
+  
+  <aside class="notes">
+<p>
+  Mock objects are used as a stand in for objects which do not yet exist.
+</p>
+<p>  
+  They're used in tests to make sure that one bit of code calls another bit of code correctly.
+</p>
+<p>
+  In this example, we're creating a mock object that expects to have its 'getUri' method called, and will return the string '/search'  
+</p>
+<p>
+  If foo doesn't call '$mock->getUri()' the test will fail
+</p>
+    
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+    <pre class="danackCode spaceTop em1_4" data-trim><code class="php" data-trim>
+use Psr\Http\Message\ServerRequestInterface 
+      as Request;
+      
+class SearchController
+{
+    function search(Request $request, ...)
+    {
+       ...
+    }
+}
+</code>
+</pre>
+  
+    <aside class="notes">
+      <p>Traditional interface segregation example</p>
+      <p>We have an endpoint of an API that allows users to search for stuff by keywords.</p>
+  <p>
+    We have a SearchController - one of the parameters it needs to run is a PSR7 Request object.
+  </p>
+  <p>Without being able to see the code inside the function, can you tell how the Request object is being used?</p>
+      <p>Does it help if I show you the methods that are defined for Request objects?</p>
+  </aside>
+  
+</section>
+
+<!-- *************************** -->
+<section>
+<pre class="danackCode em1_05" data-trim>
+<code class="php" data-trim>
+interface ServerRequestInterface extends RequestInterface
+{
+    public function getServerParams();
+    public function getCookieParams();
+    public function withCookieParams(array $cookies);
+    public function getQueryParams();
+    public function withQueryParams(array $query);
+    public function getUploadedFiles();
+    public function withUploadedFiles(array $uploadedFiles);
+    public function getParsedBody();
+    public function withParsedBody($data);
+    public function getAttributes();
+    public function getAttribute($name, $default = null);
+    public function withAttribute($name, $value);
+    public function withoutAttribute($name);
+}
+</code>
+</pre>
+  
+  <aside class="notes">
+    <p>
+      Lets have a look at it.
+    </p>
+    <p>
+      Hmm, it has a lot of methods - oh it also extends another interface
+    </p>
+  </aside>
+  
+</section>
+
+
+<!-- *************************** -->
+<section>
+<pre class="danackCode em1_2" data-trim>
+<code class="php" data-trim>
+interface RequestInterface extends MessageInterface
+{
+    public function getRequestTarget();
+    public function withRequestTarget($requestTarget);
+    public function getMethod();
+    public function withMethod($method);
+    public function getUri();
+    public function withUri(UriInterface $uri, 
+        $preserveHost = false);
+}
+</code>
+</pre>
+    <aside class="notes">
+    <p>
+      Hmm, that also has a few methods on it, and extends another interface...
+    </p>
+  </aside>
+</section>
+
+<!-- *************************** -->
+<section>
+<pre class="danackCode em1_2" data-trim>
+<code class="php" data-trim>
+interface MessageInterface
+{
+    public function getProtocolVersion();
+    public function withProtocolVersion($version);
+    public function getHeaders();
+    public function hasHeader($name);
+    public function getHeader($name);
+    public function getHeaderLine($name);
+    public function withHeader($name, $value);
+    public function withAddedHeader($name, $value);
+    public function withoutHeader($name);
+    public function getBody();
+    public function withBody(StreamInterface $body);
+}
+</code>
+</pre>
+  
+      <aside class="notes">
+    <p>
+      Hmm, that also has a few methods on it, and extends another interface...
+    </p>
+  </aside>
+  
+  <aside class="notes">
+    <p>
+      Which also has quite a few method on it...
+    </p>
+  </aside>
+  
+</section>
+
+
+<!-- *************************** -->
+<section>
+    <h2>Creating a mock ...?</h2>
+<pre class="danackCode em1_4" data-trim>
+<code class="php" data-trim>
+function testSearchController()
+{
+    $request = \Mockery::mock(Request::class)
+      ->shouldReceive(???)
+      ->andReturn(???)
+      ->getMock();
+ 
+    ...
+    ...
+}</code></pre>
+  
+  <aside class="notes">
+    <p>
+      Ok - but now you've seen all the methods that are available for requests objects, are you able to tell me how to create a mock for the object for a unit test...? 
+    </p>
+    <p>
+      No....even knowing all of the methods on the object, it doesn't help you reason about the code. Any of those 30 methods could be needed in a test.
+    </p>
+    <p>
+      Instead you must read the actual code to know how it's being used.
+    </p>
+    
+    
+  </aside>
+</section>
+
+
+
+
+<!-- *************************** -->
+
+<!-- 
+<section>
+    <h2>This is the actual mock</h2>
+<pre class="danackCode em1_4" data-trim>
+<code class="php" data-trim>
+function testSearchController()
+{
+    $request = \Mockery::mock(Request::class)
+      ->shouldReceive('getQueryParams')
+      ->andReturn(['searchTerms' => 'foo,bar'])
+      ->getMock();
+  
+    ...
+    ...
+}
+</code></pre>
+  
+  <aside class="notes">
+<p>
+  
+  Just to be clear, mock objects allow the setting of expected method calls and return values.
+  
+</p>
+<p>  
+   People use them to stand in for objects which do not yet exist, or to allow for the exploratory 
+  
+  So that you can avoid having to write specific implementations.
+  
+  Using a flexible API which is capable of capturing every possible real object behaviour in way that is stated as close as possible to a natural language description.
+  
+</p>
+
+    
+  </aside>
+</section>
+
+-->
+
+
+
+
+<!-- *************************** -->
+<section>
+  <pre class="danackCode em1_2" data-trim>
+<code class="php" data-trim>
+class SearchController
+{
+   function search(Request $request, DataSource $dataSource) 
+   {
+      $queryParams = $request->getQueryParams();
+      if (!array_key_exists('searchTerms', $queryParams)) {
+         throw new ParamsMissingException("...");
+      }
+      $searchTerms = $queryParams['searchTerms'];
+
+      $searchOptions = [];
+      $searchOptions['keywords'] = explode(',', $searchTerms);
+      return $dataSource->searchForItems($searchOptions);
+   }
+}
+</code></pre>
+  
+  <aside class="notes">
+    <p>
+      So this is how the request object is being used.
+    </p>
+    <p>Just getting the query params and pulling a value out, or throwing an exception if it's not set</p>
+    <p>
+      Just to highlight the code we're going to extract:
+    </p>
+  </aside>  
+</section>
+
+
+
+
+
+<section>
+  <pre class="danackCode em1_2" data-trim>
+<code class="php">
+//class SearchController
+//{
+// function search(Request $request, DataSource $dataSource) 
+// {
+      $queryParams = $request->getQueryParams();
+      if (!array_key_exists('searchTerms', $queryParams)) {
+         throw new ParamsMissingException("...");
+      }
+      $searchTerms = $queryParams['searchTerms'];
+
+//    $searchOptions = [];
+//    $searchOptions['keywords'] = explode(',', $searchTerms);
+//    return $dataSource->searchForItems($searchOptions);
+//  }
+//}
+  
+</code></pre>
+  
+  <aside class="notes">
+    <p>
+      Lets start segregating!
+    </p>
+    <p>
+      You know, when I say it outloud like that - it doesn't sound so good. 
+    </p>
+    <p>
+      So instead, actually lets start "extracting a type". More precise name, and doesn't sound bad.
+    </p>
+  </aside>  
+</section>
+
+
+
+
+<!-- *************************** -->
+<!--
+<section>
+  <pre class="danackCode em1_2" data-trim>
+<code class="php">
+  $queryParams = $request->getQueryParams();
+  if (!array_key_exists('searchTerms', $queryParams)) {
+     throw new ParamsMissingException("...");
+  }
+  $searchTerms = $queryParams['searchTerms'];
+
+</code></pre>
+  
+  <aside class="notes">
+    <p>
+      Lets start segregating!
+    </p>
+    <p>
+      Actually lets start "type-extracting". More precise name, and doesn't sound bad.
+    </p>
+  </aside>  
+</section>
+
+-->
+
+
+<!-- *************************** -->
+<section >
+  <h2 class="em2_4">Extracting a type</h2>
+  <pre class="danackCode em1 spaceTop" data-trim><code class="php">
+interface VariableMap
+{
+    /**
+     * @throws ParamMissingException
+     */
+    public function getVariable(string $variableName) : string;
+}
+</code>
+</pre>
+    <aside class="notes">
+      <p>
+        What the code is doing is fetching a variable by name, so VariableMap seems a sensible name for the interface.
+      </p>
+    <p>
+      The extracted interface is very small, which is nice as it's very reasonable.
+    </p>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <pre class="danackCode em1" data-trim>
+    <code class="php" data-trim>class PSR7VariableMap implements VariableMap {
+    /** @var ServerRequestInterface */
+    private $serverRequest;
+
+    public function __construct(ServerRequestInterface $serverRequest) {
+        $this->serverRequest = $serverRequest;
+    }
+
+    public function getVariable(string $variableName) : string {
+        $queryParams = $this->serverRequest->getQueryParams();
+        if (array_key_exists($variableName, $queryParams) === false) {
+            $message = "Parameter [$variableName] is not available";
+            throw new ParamMissingException($message);
+        }
+
+        return $queryParams[$variableName];
+    }
+}
+</code>
+</pre>
+  <aside class="notes">
+    <p>
+      Create an implementation for PSR7, which very simply implements the interface.
+    </p>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h2>Controller is now simpler, and more reasonable</h2>
+  <pre class="danackCode em1" data-trim>
+<code class="php" data-trim>
+class SearchController
+{
+// function search(Request $request, DataSource $dataSource) 
+   function search(VariableMap $variableMap, DataSource $dataSource)
+   {
+      $searchTerms = $variableMap->getVariable('searchTerms');
+      // $queryParams = $request->getQueryParams();
+      // if (!array_key_exists('searchTerms', $queryParams)) {
+      //    throw new ParamsMissingException("...");
+      // }
+      // $searchTerms = $queryParams['searchTerms'];
+      $searchOptions = [];
+      $searchOptions['keywords'] = explode(',', $searchTerms);
+
+      return $dataSource->searchForItems($searchOptions);
+   }
+}
+</code>
+</pre>
+  <aside class="notes">
+    <ul>
+      <li>We then refactor the controller to use the interface. The commented out code is what we had before.</li>
+      <li>Controller is way simpler</li>
+      <li>...but we have more the components</li>
+    </ul>  
+  </aside>
+</section>
+
+<section>
+  <h1>I <strike>hate</strike> strongly dislike mocks</h1>
+  <ul class="em1_5" style="padding-top: 50px">
+    <li class="fragment">Mocks should only be used when you have to test behaviour</li>
+    <li class="fragment">Stubs/fakes are much easier to use</li>
+    <li class="fragment">Stubs/fakes suffer from poor marketing...</li>
+  </ul>
+
+  <aside class="notes">
+    <p>I have to be honest - I just don't like mocks that much. Although sometimes they are needed they have massive downsides.</p>
+    <p>
+      I find them hard to read. And my IDE doesn't understand them - which makes refactoring code be a pain.
+    </p>
+    <p>Mocks should only be used when you have to test behaviour</p>
+    <p>A stub or fake implementation is an class that implements an interface in a very simple way.</p>
+  </aside>
+  
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Fake implementation of DataSource</h1>
+  <pre class="danackCode em1_3" data-trim>
+<code class="php">
+interface DataSource {
+   function searchForItems(array $searchOptions);
+}
+    
+class EchoDataSource implements DataSource {
+   function searchForItems(array $searchOptions) {
+      return $searchOptions; 
+   }
+}
+</code></pre>
+   <aside class="notes">
+     <p>
+       This is a 'fake' implementation of the DataSource interface.
+     </p>
+
+  </aside>
+</section>
+
+<!-- *************************** -->
+<section>
+  <h1>Stub implementation of VariableMap</h1>
+  <pre class="danackCode em1_1" data-trim>
+<code class="php">class ArrayVariableMap implements VariableMap {
+  public function __construct(array $variables) {
+    $this->variables = $variables;
+  }
+
+  public function getVariable(string $variableName) : string {
+    if (!array_key_exists($variableName, $this->variables)) {
+        $message = "Parameter [$variableName] is not available";
+        throw new ParamMissingException($message);
+    }
+
+    return $this->variables[$variableName];
+  }
+}</code></pre>
+   <aside class="notes">
+     <p>
+       The controller is dependent on the VariableMap interface.
+     </p>
+    <p>
+      An implementation of that interface based on array is equally valid and allows us to test easily.
+    </p>
+     <p>
+       So here is an ArrayVariableMap, all it does is take an array of values, and then returns one when you ask for it, or throws an exception if the variable isn't available.
+     </p>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Testing the controller, success case</h1>
+  <pre class="danackCode em1_2" data-trim>
+  <code class="php" data-trim>function testSearchControllerWorks()
+{
+    $varMap = new ArrayVariableMap(
+        ['searchTerms' => 'foo,bar']
+    );
+    // EchoDataSource just returns the keywords searched
+    $dataSource = new EchoDataSource(); 
+
+    $controller = new SearchController();
+    $result = $controller->search($varMap, $dataSource);
+    $this->assertEquals(['foo', 'bar'], $result);
+} </code></pre>
+    
+    <aside class="notes">
+      Because the Array implementation is simple to create, it's a lot easier to use that than trying to mock the Request object. 
+    </aside>
+</section>
+
+
+
+<!-- *************************** -->
+
+<section>
+    <h1>Testing the controller, error case</h1>
+  <pre class="danackCode em1_2" data-trim>
+  <code class="php" data-trim>
+function testSearchControllerException()
+{
+    $varMap = new ArrayVariableMap([]);
+    $dataSource = new EchoDataSource();
+
+    $controller = new SearchController();
+    $this->setExpectedException('ParamMissingException');
+    $controller->search($varMap, $dataSource);
+}
+  </code>
+</pre>
+</section>
+
+
+
+<!-- *************************** -->
+<section class="em1_5">
+  <h1>Benefits review</h1>
+  <ul>
+    <li class="fragment">Controller re-usable with different HTTP library</li>
+    <li class="fragment">Actually no longer tied to HTTP request. <br/>Can be used by CLI application</li>
+    <li class="fragment">Tests easier to write, as can use array implementation</li>
+    <li class="fragment">Tests run faster</li>
+    <li class="fragment">Tests are easier to reason about</li>
+  </ul>
+  
+  <aside class="notes">
+   <ul>
+     <li>That's a simple example of interface segregation - I'm hoping it wasn't too scary.</li>
+     <li>All we really did was move code around a little, and add an interface.</li>
+     <li>For that small amount of work the benefits are:</li>
+     <li>Faster tests aren't worth much individually, but when you have 1000</li>
+   </ul>  
+  </aside>
+</section>
+
+ 
+<!-- *************************** -->
+<section class="em1_5">
+  <h1>Testing code</h1>
+  <ul style="padding-top: 100px">
+    <li>J.B. Rainsberger - Integrated Tests Are A Scam <br/> <a href="https://vimeo.com/80533536">https://vimeo.com/80533536</a></li>
+    <li>Unit tests aren't what you think they are either</li>
+  </ul>
+</section>
+<!-- *************************** -->
+<section style="text-align: center" data-background="-webkit-radial-gradient(center, circle cover, #dddddd 45%, #b7b7b7 75%)">
+
+
+
+
+
+<svg width="1600" height="1000">
+  
+  <g transform="scale(1.2, 1.2), translate(0,0)">
+  
+  <g class="current-visible">
+    <line x1="600" y1="120" x2="600" y2="320" style="stroke:rgb(0,0,0);stroke-width:3" />
+    <line x1="600" y1="420" x2="600" y2="620" style="stroke:rgb(0,0,0);stroke-width:2" />
+  </g>
+  
+  <rect x="180" y="300" width="840" height="140" style="fill:rgb(128,236,128);stroke-width:4;stroke:rgb(0,0,0)"   class="fragment current-visible" />
+  
+  <g class="fragment current-visible">
+    <rect x="200" y="120" width="800" height="200" style="fill:rgba(128,236,128, 1);stroke-width:0;stroke:rgba(0,0,0,0)" />
+
+    <!-- <line x1="200" y1="220" x2="1000" y2="220" stroke-dasharray="20,20" stroke-dashoffset="10" style="stroke:rgb(0,0,0);stroke-width:2" /> -->
+  </g>
+  
+    <rect x="200" y="20" width="800" height="100" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+    <text x="600" y="85" text-anchor="middle" fill="black">Front controller / dispatcher</text>
+    
+    <rect x="200" y="320" width="800" height="100" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+    <text x="600" y="385" text-anchor="middle" fill="black">SearchController::search</text>
+
+    <rect x="200" y="620" width="800" height="100" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+    <text x="600" y="685" text-anchor="middle" fill="black">DataSource::searchForItems</text>
+    
+  </g>
+</svg>
+
+  
+  <aside class="notes">
+   <ul>
+     <li>We like to think of unit tests as testing code in isolation.</li>
+     <li>So when we're testing the SearchController, this green box is what we're testing</li>
+     <li>This isn't exactly true...instead we mostly write 'contract' tests where we're testing what happens when the code is passed an object that has the query params, or what happens when it's passed one that doesn't have the query params</li>
+     <li>So what we're actually testing is this contract between the caller and callee</li>
+   </ul>  
+  </aside>
+
+  
+</section>
+
+
+
+
+
+<!-- *************************** -->
+<section style="text-align: center" data-background="-webkit-radial-gradient(center, circle cover, #dddddd 45%, #b7b7b7 75%)">
+<svg width="1600" height="1000">
+  
+  <g transform="scale(1.2, 1.2), translate(0,0)">
+  <rect x="200" y="105" width="800" height="415" style="fill:rgba(128,236,128, 1);stroke-width:0;stroke:rgba(0,0,0,0)" />
+ 
+  <rect x="200" y="5" width="800" height="100" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+  <text x="600" y="70" text-anchor="middle" fill="black">Front controller / dispatcher</text>
+
+  <g class="fragment current-visible">
+    <rect x="50" y="160" width="1100" height="300" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+    <text x="80" y="205" fill="black" font-size="24px">interface Request {</text>  
+    <text x="80" y="425" fill="black" font-size="24px">}</text>
+
+    <g transform="translate(-130 -110)" >
+<text x="250" y="350" fill="black" font-size="24">
+    getServerParams()
+    getCookieParams()
+    withCookieParams(...)
+    getHeaders()
+    getParsedBody()
+</text>
+<text x="460" y="380" fill="black" font-size="24">
+    withQueryParams(...)
+    getUploadedFiles()
+    withUploadedFiles(...)
+    getUri()
+</text>
+<text x="250" y="380" fill="black" font-size="24">    
+  getQueryParams()
+</text>
+      
+<rect x="235" y="350" width="230" height="50" style="fill: transparent; stroke-width:4;stroke:rgb(196,32,32)" />
+      
+<text x="250" y="410" fill="black" font-size="24">
+    withParsedBody(...)
+    getAttributes()
+    getAttribute(...)
+    withAttribute(...)
+    withoutAttribute(...)
+</text>
+<text x="250" y="440" fill="black" font-size="24">
+    getRequestTarget()
+    withRequestTarget(...)
+    getMethod()
+    withMethod(...)
+    getBody()
+</text>
+<text x="250" y="470" fill="black" font-size="24">
+    withUri(...)
+    getProtocolVersion()
+    withProtocolVersion(...) 
+    withHeader(...)
+    withoutHeader(...)
+</text>
+<text x="250" y="500" fill="black" font-size="24">
+    withAddedHeader(...)
+    hasHeader(...)
+    getHeader(...)
+    getHeaderLine(...)
+    withBody(...)
+</text>
+
+  </g>
+</g>
+  
+    <g class="fragment current-visible">  
+      <rect x="350" y="250" width="500" height="110" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />  
+      <text x="380" y="285" fill="black" font-size="24px">interface VariableMap {</text>  
+      <text x="420" y="320" fill="black" font-size="24">
+        function getVariable($variableName);
+      </text>
+      <text x="380" y="345" fill="black" font-size="24px">}</text>
+    </g>
+  
+    <rect x="200" y="520" width="800" height="100" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+    <text x="600" y="585" text-anchor="middle" fill="black">SearchController::search</text>
+
+    <line x1="600" y1="620" x2="600" y2="720" style="stroke:rgb(0,0,0);stroke-width:2" />
+
+    <rect x="200" y="670" width="800" height="100" style="fill:rgb(255,255,255);stroke-width:4;stroke:rgb(0,0,0)" />
+    <text x="600" y="735" text-anchor="middle" fill="black">DataSource::searchForItems</text>
+    </g>
+</svg>
+
+  
+    <aside class="notes">
+   <ul>
+     <li>Need to change the diagram a bit to make space.</li>
+
+      <li>The request interface is huge. Although we can 'understand' that not all of it is needed for the test, it is still a large 'coupling surface' between the caller and the SearchController</li>
+
+     <li>The variableMap is much smaller. The amount of 'stuff' the is involved when writing this test, is just much smaller.</li>
+
+     <li>Key is minimizing coupling surface</li>
+     
+     <li><B>PAUSE</B> - that is basic interface segregation.</li> 
+  
+    <li>But I think the concept is much more useful when you think about it in a more general sense, particularly in PHP where we have arrays...and so</li>
+     
+   </ul>  
+  </aside>
+</section>
+
+
+
+
+<!-- *************************** -->
+<section class="em1_5">
+  <h2 class="spaceBottom">What is <strike>interface segregation</strike> type specialization?</h2>
+  <span style="height: 50%">&nbsp;</span>
+  <blockquote class="spaceBottom embiggen">
+      “many client-specific <strike>interfaces</strike> types are better than one general-purpose <strike>interface</strike> type.”
+  </blockquote>
+
+    <aside class="notes">
+   <ul>
+     <li>Arrays in PHP are great - but hard to 'reason' about, as they can hold anything, and you can't tell what you can or should put in them.</li>
+     <li>For this example the array of 'search options' isn't particularly semantically meaningful</li>
+   </ul>  
+  </aside>  
+</section>
+
+
+
+<section>
+  <h2>We want to limit number of items</h2>
+<pre class="danackCode spaceTop em1" data-trim>
+<code class="php">
+class SearchController
+{
+  function search(DataSource $dataSource, VariableMap $variableMap)
+  {
+    $searchTerms = $variableMap->getVariable('searchTerms');
+    $searchOptions = [];
+    $searchOptions['keywords'] = explode(',', $searchTerms);
+    // limit added to $searchOptions
+    $searchOptions['limite'] = 50;
+
+    return $dataSource->searchForItems($searchOptions);
+  }
+}
+</code>
+</pre>
+  
+  <aside class="notes">
+   <ul>
+     <li>We ask one of our colleagues to add a limit to the searching, and they do this.</li>
+     <li>Is 'limite' a typo? Depends if the programmer is French?</li>
+     <li>Where would we look to see if it's a typo? DataSource is an interface....so no help. Would need to ask colleagues, look in all implementations.</li>
+     <li>As arrays are such a generic type it's hard to reason about them.</li>
+     <li>Lets extract and create a more specialized type.</li>
+   </ul>  
+  </aside> 
+</section>
+
+
+<section>
+    <h2 class="em2">Extracting a type</h2>
+<pre class="danackCode spaceTop em1" data-trim>
+  <code class="php" data-trim>
+class SearchOptions
+{
+    public $keywords;
+    public $limit;
+
+    public function __construct(array $keywords, int $limit = 1000)
+    {
+        //@TODO - check $keywords are all strings
+        $this->keywords = $keywords;
+        $this->limit = $limit;
+    }
+}</code>
+</pre>
+  
+  <aside class="notes">
+   <ul>
+     <li>Really simple type. But way more semantically meaningful</li>
+   </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+<pre class="danackCode spaceTop em_095" data-trim>
+<code class="php">
+class SearchController
+{
+    function search(VariableMap $variableMap, DataSource $dataSource)
+    {
+        $searchTermsString = $variableMap->getVariable('searchTerms');  
+        // $searchOptions = [];
+        // $searchOptions['keywords'] = explode(',', $searchTerms);
+        // $searchOptions['limite'] = 50; // LIMIT added
+        $searchTermsArray = explode(',', $searchTermsString);
+        $searchOptions = new SearchOptions($searchTermsArray, 50);
+
+        return $dataSource->searchForItems($searchOptions);
+    }
+}
+</code>
+</pre>
+  
+  <aside class="notes">
+   <ul>
+     <li>Refactor code to use this type</li>
+     <li>What options an be passed into the DataSource::searchForItems method is now trivial to reason about.</li>
+   </ul>
+  </aside>
+  
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h2>Use semantically meaningful types</h2>
+  <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php">function writeTempFile(string $tmpPath) {
+    ...
+    file_put_contents($tmpPath.'/foo.txt', $data);
+    ...
+}</code>
+<code class="php fragment em1_1">function writeImageTempFile(string $tmpPath) {
+    ...
+    file_put_contents($tmpPath.'/foo.png', $imageData);
+    ...
+}
+</code>
+</pre>
+  
+  <aside class="notes">
+   <ul>
+     <li>This type specialization applies to trivial types as well.</li>
+     <li>Common pattern to need to have pass around temp paths for writing</li>
+     <li>Very easy to pass wrong parameter to methods like this, as it will accept any string </li>
+   </ul>
+  </aside>
+  
+  
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+class TmpPath
+{
+    private $path;
+
+    public function __construct(string $tmpPath)
+    {
+        $this->path = $tmpPath;
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
+}
+</code></pre>
+  
+  <aside class="notes">
+   <ul>
+     <li>This really isn't the most complicated object ever.</li>
+   </ul>
+  </aside>  
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <h2>Use semantically meaningful types</h2>
+  <pre class="danackCode spaceTop em1" data-trim>
+<code class="php" data-trim>
+function writeTempFile(TmpPath $tmpPath)
+{
+    ...
+    file_put_contents($tmpPath->getPath().'/foo.txt', $data);
+    ...
+}
+
+function writeImageTempFile(ImageTmpPath $tmpPath)
+{
+    ...
+    file_put_contents($tmpPath->getPath().'/foo.png', $imageData);
+    ...
+}
+</code></pre>
+  
+  
+  <aside class="notes">
+   <ul>
+     <li>Allows you to see at a glance a semantically meaningful name for the parameter.</li>
+     <li>Hey, it turns out that we wanted to have different paths.</li>
+     <li>Now it is impossible for the wrong tmpPath to be used.</li>
+   </ul>
+  </aside>  
+</section>
+
+
+
+
+<!-- *************************** -->
+<section class="em1_5"> 
+  <h1>Everything is a trade-off</h1>
+
+  <aside class="notes em1" >
+    <p>
+     I hate it when you go to a conference and the speaker present a technology or idea as great with no downsides.
+    </p>
+     <p>What I find is I go away, spend some time trying to use that idea, and it just feels 'icky' and I feel bad because I must be doing something wrong? But you talk to people who actually use the technology already and find out that...yeah... it's got some downsides, and it's not your fault for finding it difficult to use. 
+     </p>
+    <p>
+      As forewarned is fore-armed, I'd like to talk about the two downsides which are:
+     </p>
+  </aside>
+</section>
+
+
+
+
+<!-- *************************** -->
+<section class="em1_5"> 
+  <h1>Writing SOLID code leads to more typing</h1>
+
+  <ul>
+     <li class="fragment">You get used to this. </li>
+     <li class="fragment">Readability > quickness to type</li>
+     <li class="fragment">Use a Dependency Injection Container to run your code github.com/rdlowrey/auryn</li>
+  </ul>
+
+  <aside class="notes">
+    <ul>
+      <li>The amount of time you actually spend writing code is tiny compared to the amount of time spent reading code.</li>
+    </ul>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Compare SOLID code</h1>
+
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+function badCode($userId)
+{
+    global $session;
+    $userId = $session->getUserId();
+
+    return User::find($userId);
+}
+</code></pre>
+  
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+function solidCode(Session $session, UserRepo $userRepo) 
+{
+    $userId = $session->getUserId();
+
+    return $userRepo->find($session->getUserId());
+}
+</code></pre>
+
+  <aside class="notes">
+    <ul>
+     <li>I think it's important to understand exactly why SOLID code is harder to use.</li>
+      <li>Here is some bade code...</li>
+      <li>And here is some good code...</li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <h1>Compare SOLID code</h1>
+
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+badCode(); // This is easy to call
+</code></pre>
+  
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+$session = new FileSession("/var/php/sessions", $request);
+$userRepo = new UserSqlRepo($pdo);
+
+solidCode($logger, $userRepo); // This is harder to call
+
+</code></pre>
+
+  <aside class="notes">
+    <ul>
+     <li>The bad code is easy to call</li>
+      <li>The SOLID code is much more difficult to call as you have to create and pass in the dependencies</li>
+      <li>As i said - you can either just grow used to this, or you a dependency injection container.</li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section class="em1_1">
+  <h2>Dependency injector container to the rescue</h2>
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+// Setup session once
+$injector->alias(Session::class, FileSession::class);
+$session = new FileSession("/var/log/appname", $request);
+$injector->share($session);
+</code></pre>
+  
+<pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+// Setup a UserSqlRepo once
+function createUserRepo(PDO $pdo) {
+  return new UserSqlRepo($dbConnection);
+}
+
+$injector->delegate(UserRepo::class, 'createUserRepo');
+</code></pre>
+  
+<pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+// This runs the code and passes the 
+// correct variables to the function.
+$injector->execute('solidCode');
+</code></pre>
+  
+
+  <aside class="notes">
+   <p>
+    SKIP
+  </p>
+ 
+
+  
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Designing good interfaces is hard</h1>
+  <img src="/images/HowToDrawAnOwl_Fine.png" style="width: 75%" class="fragment"/>
+
+  <aside class="notes">
+    <ul class="em1">
+      <li>Designing interfaces is just hard. In many ways it's a skill similar to drawing an owl.</li>
+      <li>Who here knows how to draw an owl?</li>
+      <li>you draw some circles, draw the rest of the owl.</li>
+      <li>It's the same for designing good interfaces. You kind of start trying to design them.....and then through some unclear process you're meant to emerge with a good interface....somehow.</li>
+      <li>Or to put it simply, I can't tell you exactly how to design good interfaces, but I can show you some general types of interfaces that should serve you well.</li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section class="em2">
+  <h1>Trivial ones</h1>
+  
+  <ul>
+    <li>Psr\Log\LoggerInterface</li>
+    <li>VariableMap</li>
+    <li>Reader and Writer</li>
+  </ul>
+
+  <aside class="notes">
+    <ul>
+      <li>The first type of good interface are those that are trivial, so things like a logger, the VariableMap from earlier in the talk, file readers and writers.</li>
+      <li>These ones can be reused across many different projects. If you should look to other projects</li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section >
+  <h1 class="em3">Business (aka domain) interfaces</h1>
+  <ul class="em2" style="padding-top: 100px">
+    <li class="fragment">Emerge from your application.</li>
+    <li class="fragment">Probably not reusable.</li>
+    <li class="fragment">Provide a large amount of value.</li>
+  </ul>
+
+  <aside class="notes">
+  <ul class="em0_9">
+    <li>These emerge from your apps 'business' needs.</li>
+    <li>If you do Test Driven development these will be designed before app is written.</li>
+    <li>If, like most developers, you don't do TDD, these patterns emerge when you go to write your tests after you write your application code.</li>
+    <li>If it is at all possible I strongly recommend allocating some time after you have written code to refactor the code to extract interfaces either before you write your unit tests.</li>
+    <li>These interfaces are likely to be the ones that provide the most value to your company, as they are a vital step in decoupling layers of your application.</li>
+    <li>They also provide a clean 'language' for programmers in a team to communicate with. Because there's no implementation to be distracting, you can talk about just the input and output of the interface.</li>
+  </ul>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Avoid big interfaces</h1>
+
+  
+    <pre class="danackCode spaceTop em1_3" data-trim>
+<code class="php" data-trim>
+
+interface FileUploader {
+    function upload($localFilename, $storageName);
+}
+</code></pre>
+
+  <aside class="notes">
+    <ul>
+     <li></li>
+    </ul>
+  </aside>
+</section>
+
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Avoid big interfaces</h1>
+
+  
+    <pre class="danackCode spaceTop em1_3" data-trim>
+<code class="php" data-trim>
+
+interface FileTransfer {
+    function upload($localFilename, $storageName);
+    function download($localFilename, $storageName);
+}
+ 
+</code></pre>
+
+  <aside class="notes">
+    <ul>
+     <li></li>
+    </ul>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Avoid big interfaces</h1>
+
+    <pre class="danackCode spaceTop em1_3" data-trim>
+<code class="php" data-trim>
+interface FileTransfer {
+    function upload($localFilename, $storageName);
+    function download($localFilename, $storageName);
+    function fileExists($storageName);
+}
+</code></pre>
+  
+  <p class="fragment em1_3">
+    And so it grows...
+  </p>
+  
+  <aside class="notes">
+    <ul>
+     <li>The problem is that not all implementations are equal</li>
+      <li>Also, when you come to test your application, you will have mock or stub out methods that are not actually used in the test.</li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <h1>Breakup big interfaces</h1>
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+interface FileUploader {
+    function upload($localFilename, $storageName);
+}
+
+interface FileDownloader {
+    function download($localFilename, $storageName);
+}
+
+interface FileChecker {
+    function fileExists($storageName);
+}
+</code></pre>
+
+  <aside class="notes">
+    <ul>
+     <li>Instead of having big monolithic interfaces, break them up into sensible components.</li>
+    </ul>
+  </aside>
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+  <h1>Breakup big interfaces</h1>
+    <pre class="danackCode spaceTop em1_1" data-trim>
+<code class="php" data-trim>
+interface FileTransfer extends FileUploader, FileDownloader { }
+
+class S3FileManager implements 
+    FileUploader, 
+    FileDownloader, 
+    FileChecker
+{
+   ...
+}
+
+function foo(FileTransfer $fileTransfer) {
+  ...
+}
+  
+foo(new S3FileManager(...));  
+</code></pre>
+
+  <aside class="notes">
+    <ul>
+     <li>You can then combine the individual interfaces together in whichever ways make sense.</li>
+     <li>If an class implements more than the required interfaces, that is fine. PHP will only check that that </li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section class="em1_4">
+  <h1>Psychological aspects of programming</h1>
+  <h3>The chase for Endorphins</h3>
+  <p>
+    <small><a href="http://twitter.com/MrDanack">@MrDanack</a></small>
+  </p>
+  
+  <aside class="notes">
+    <ul>
+     <li>We don't talk about our emotions enough.</li>
+     <li>Pretending that we're completely logical is to ignore humanity.</li>
+    </ul>
+  </aside>
+</section>
+
+
+<!-- *************************** -->
+<section>
+  <h2>How does this code make you feel?</h2>  
+  <pre class="danackCode em1" data-trim><code class="php" data-trim>
+class ArrayVariableMap implements VariableMap
+{
+    public function __construct(array $variables)
+    {
+        $this->variables = $variables;
+    }
+
+    public function getVariable(string $variableName) : string
+    {
+        if (array_key_exists($variableName, $this->variables) === false) {
+            $message = "Parameter [$variableName] is not available";
+            throw new ParamMissingException($message);
+        }
+
+        return $this->variables[$variableName];
+    }
+}
+</code></pre>
+  
+    <aside class="notes">
+    <ul>
+
+      <li>
+        When people write some clever code, that does something interesting, they feel good about themselves.
+      </li>
+      <li>
+        How would you feel after writing this code? Clever? Smart? Bored? Yep.
+      </li>
+      <li>
+        Let me ask you a different question. You're applying for a job. A potential employer asks you to submit them some code to show how solid a programmer you are. WHO WOULD SUBMIT THIS CODE?
+      </li>
+      <li>
+        "Hey there employer, I can write you a class that takes an array, and then allows you to pull out a variable from that array?". NO ONE WOULD DO THIS!
+      </li>
+  </ul>
+  </aside>
+</section>
+
+
+
+
+
+<!-- *************************** -->
+<section class="em1_5">
+  <h1 class="finale">Simplicity Is Hard</h1>
+    <aside class="notes">
+    <ul>
+      <li>
+        Is the ArrayVariableMap class clever? Nope.
+      </li>
+      <li>
+        English is a crappy language - and the words you use to describe code affect how you feel about it.
+      </li>
+      <li>
+        This code is boring, because it is trivial....but "not clever" does not imply bad. 'Boring' does not imply bad.
+      </li>
+      <li>Boring is good - it implies simple.</li>
+      <li>I want you to learn to feel proud that you have written simple code. It's a hard skill to master.</li>
+    </ul>
+  </aside>
+</section>
+
+
+
+<section class="em1_2">
+  <h2>Terminology sculpts cognition</h2>
+ 
+  <blockquote class="emnormal">
+      “The purpose of abstracting is not to be vague, but to create a new semantic level in which one can be absolutely precise. The intellectual effort needed  to ... understand a program need not grow more than proportional to program length.” - Edsger W. Dijkstra
+  </blockquote>
+  
+  <p>
+    a.k.a. think of your code being better because it is simpler rather than being boring.
+  </p>
+
+  <aside class="notes">
+    <ul>
+      <li>
+      Code needs to be simple, so that when you're looking at how all of the pieces of your application fit together, you can reason about how those pieces work together without having to understand the intricate details of each part.
+    </li>
+      <li>
+        It's the only way to be able to build large applications that aren't impossibly complicated.
+      </li>
+      <li>
+        But best of all simple code lets you finish on time.
+      </li>
+        
+  </ul>
+  </aside>
+</section>
+
+
+
+
+
+
+
+<!-- *************************** -->
+<section class="em1_5">
+  <h1 class="finale">Fin</h1>
+  <div style="min-height: 100px">&nbsp;</div>
+  <ul>
+    <li>Use interfaces/classes with only the required methods</li>
+    <li>Use semantically meaningful types</li>
+    <li>If your code is <strike>boring</strike> simple, you're doing good</li>
+    <li>Use DIC/Auryn to do the boring wiring up</li>
+    <li>Questions?</li>
+    <li>https://joind.in/talk/04aa0</li>
+  </ul>
+</section>
+
+<section style="width: 100%; text-align: center !important;">
+    <img src="/images/true_neutral.jpg" />
+</section>
+
+
+
+<!-- *************************** -->
+<section>
+    <p>
+      When people give talks on the "S.O.L.I.D." design principles one of the letters that doesn't get enough attention is the "i" - the "interface segregation principle". This talk seeks to redress that imbalance by going into a bit more in-depth into:
+    </p>
+  <ul>
+    <li>
+      An introduction to interface segregation and an explanation of how it make your code easier to test.
+    </li>
+    <li>
+      Why in PHP we need to apply the principle more broadly, to make types be more specific, so that code is more reasonable.
+    </li>
+    <li>
+      Me babbling on about emotions, and how good code is boring. Which is good! 
+    </li>
+  </ul>
+</section>
+
+
+
+
+
+<!-- *************************** -->
+<section>
+    <blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+        &ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+    </blockquote>
+</section>
+
+        
+
+<!-- *************************** -->
+<section>
+  <p>
+    Object-oriented programming is an exceptionally bad idea which could only have originated in California — Edsger W. Dijkstra
+  </p>
+
+  <aside class="notes">
+  </aside>  
+</section>
+
+        
+        
+        
+      </div>
+  </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: false,
+                history: true,
+                center: true,
+                width: 1600,
+                height: 1200,
+
+                // Factor of the display size that should remain empty around the content
+                margin: 0.05,
+                slideNumber: true,
+                //transition: 'slide', // none/fade/slide/convex/concave/zoom
+                transition: 'none', 
+                //transitionSpeed: "slow",
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    //{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    //{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad({languages: ["php"]}); },  },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+            
+            
+            /* This draws the graph on the slide on a slidechanged event */
+            Reveal.addEventListener('slidechanged', function(event) {
+                var callback = "render_"+event.currentSlide.id;
+                if(typeof(window[callback])=="function") {
+                    window[callback]();
+                }
+            } );
+            /* This draws the graph if we got here directly without coming from another slide */
+            Reveal.addEventListener('ready', function(event) {
+                var callback = "render_"+event.currentSlide.id;
+                if(typeof(window[callback])=="function") {
+                    window[callback]();
+                }
+            });
+
+var createFunc = function() {
+  var counter = 0;
+  var themeCounter = 0;
+    return function(e) {
+      
+      
+      var themeCSSList = [
+        "css/theme/whiteDanack.css",
+        "css/theme/beige.css",
+        "css/theme/black.css",
+        "css/theme/blood.css",
+        "css/theme/league.css",
+        "css/theme/moon.css",
+        "css/theme/night.css",
+        "css/theme/serif.css",
+        "css/theme/simple.css",
+        "css/theme/sky.css",
+        "css/theme/solarized.css",
+      ];
+      
+      var codeCSSList = [
+        "lib/css/zenburn_backup.css",
+        "lib/css/vsdanack.css",
+      ];
+      
+      if(e.which == 67 || e.which == 99) { //'c'
+        counter = (counter + 1);// % 1;
+
+        var codestyle = codeCSSList[counter % codeCSSList.length];
+        $("#codeststylecss").attr('href', codestyle);
+        $("#debug").text(codestyle);
+      }
+    };
+};
+
+          $(window).keypress(createFunc());
+        </script>
+    </body>
+</html>

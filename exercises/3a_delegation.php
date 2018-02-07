@@ -26,28 +26,35 @@ class OutOfOfficeHoursContactUs implements ContactUs
     }
 }
 
+function renderContactUsButton(ContactUs $contactUs)
+{
+    echo $contactUs->getMessage();
+}
+
+
+$injector = new Injector();
+
 function createContactUs()
 {
     $hourOfDay = date('H');
 
     // Discussion point, how can we test this?
     if ($hourOfDay > 9 && $hourOfDay < 17) {
-        return new DuringOfficeHoursContactUs();
+        // @TODO - Return something here.
     }
 
-    return new OutOfOfficeHoursContactUs();
+    // @TODO - Return something here.
 }
 
 
-$injector = new Injector();
-$injector->delegate(ContactUs::class, 'createContactUs');
+// Task
+//
+// i) Fill out the createContactUs function so that it returns a 'DuringOfficeHoursContactUs'
+// object during office hours, and a 'OutOfOfficeHoursContactUs' object out of office hours.
+//
+// ii) Connec the 'createContactUs' function as the 'delegate function' to be used when something
+// requires a ContactUs object.
 
-function renderContactUsButton(ContactUs $contactUs)
-{
-    echo $contactUs->getMessage();
-}
-
-$injector->execute('renderContactUsButton');
 
 
 

@@ -12,6 +12,7 @@ class ComposerStaticInit615ec729fb17418cce5c181fb30a01bf
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'c7a1089ba35f8274cf630debb7de059c' => __DIR__ . '/..' . '/ezimuel/php-secure-session/bin/register_secure_session.php',
+        '600384842fa3ac618ad1693372d5557f' => __DIR__ . '/../..' . '/lib/bootstrap.php',
         'a13625b0b50fbf6c65490231df38b04b' => __DIR__ . '/../..' . '/lib/functions.php',
     );
 
@@ -69,6 +70,10 @@ class ComposerStaticInit615ec729fb17418cce5c181fb30a01bf
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+        ),
+        'B' => 
+        array (
+            'Birke\\Rememberme\\' => 17,
         ),
         'A' => 
         array (
@@ -174,6 +179,10 @@ class ComposerStaticInit615ec729fb17418cce5c181fb30a01bf
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
+        'Birke\\Rememberme\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib/birke/rememberme/src',
         ),
         'Auryn\\' => 
         array (

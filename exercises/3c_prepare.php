@@ -78,7 +78,7 @@ function createPdoConfig()
     );
 }
 
-function createPdo(PdoConfig $pdoConfig)
+function createPdoFromConfig(PdoConfig $pdoConfig)
 {
     $dsn = sprintf(
         "mysql:host=%s; dbname=%s",
@@ -89,23 +89,32 @@ function createPdo(PdoConfig $pdoConfig)
     return new PDO($dsn, $pdoConfig->getUser(), $pdoConfig->getPassword());
 }
 
-function preparePdo(PDO $pdo)
-{
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
 
 $injector->delegate(\PdoConfig::class, 'createPdoConfig');
-$injector->delegate(\PDO::class, 'createPdo');
-$injector->prepare(\PDO::class, 'preparePdo');
+$injector->delegate(\PDO::class, 'createPdoFromConfig');
 
-
-function testShit(Pdo $pdo)
+function testDataReading(Pdo $pdo)
 {
-    $statement = $pdo->query("select * from foo");
-    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($rows);
+    try {
+        $statement = $pdo->query("select * from exampe_data");
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+        // error in SQL, won't reach this.
+    }
+    catch (\PDOException $pdoException) {
+        echo "\o/ : " . $pdoException->getMessage();
+    }
 }
 
 
-$injector->execute('testShit');
+
+// TASK
+//
+// Enable exception mode on the PDO connection through a 'prepare' function that sets the exception error mode.
+// HINT - the code for that would be `$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);`
+// p.s. yes, I know it could be done in the delegate function, but I couldn't think of another
+// prepare example.
+//
+// i.e. the exception should be caught in the catch PDOException block not a generic PHP error
+
+$injector->execute('testDataReading');
 

@@ -1,0 +1,20 @@
+
+{% if flash_message_error is defined %}
+  {% if flash_message_error is not empty %}
+  <div style="margin: 0px;" >
+    <p class="login-error text-center">
+      <span class="alert alert-danger">{{ flash_message_error }}</span>
+    </p>
+  </div>
+  {% endif %}
+{% endif %}
+
+{% if flash_message_success is defined %}
+  {% if flash_message_success is not empty %}
+  <div style="margin: 0px;" >
+    <p class="text-center">
+      <span class="alert alert-success">{{ flash_message_success }}</span>
+    </p>
+  </div>
+  {% endif %}
+{% endif %}

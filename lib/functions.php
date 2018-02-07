@@ -112,30 +112,15 @@ function generate_password_hash($password)
     return password_hash($password, PASSWORD_BCRYPT, $options);
 }
 
-function createSqlitePDO()
+
+function aurynWorkshopResponseMapper(\AurynWorkshop\Response $builtResponse, ResponseInterface $response)
 {
-    $dsn = sprintf("sqlite:%s", getConfig(['auryn_workshop', 'file_database', 'path']));
-    $pdo = new \PDO($dsn);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    $createSQL = 'CREATE TABLE IF NOT EXISTS example_data (
-                        foo VARCHAR (255),
-                        bar TEXT NOT NULL
-                      )';
-    $pdo->exec($createSQL);
+    $response = $response->withStatus($builtResponse->getStatus());
+    foreach ($builtResponse->getHeaders() as $key => $value) {
+        /** @var $response \Psr\Http\Message\ResponseInterface */
+        $response = $response->withAddedHeader($key, $value);
+    }
+    $response->getBody()->write($builtResponse->getBody());
 
-    return $pdo;
-}
-
-function createPdo()
-{
-    $dsn = sprintf(
-        "mysql:host=%s; dbname=%s",
-        getConfig(['auryn_workshop', 'database', 'host']),
-        getConfig(['auryn_workshop', 'database', 'schema'])
-    );
-
-    return new PDO(
-        $dsn, getConfig(['auryn_workshop', 'database', 'username']),
-        getConfig(['auryn_workshop', 'database', 'password'])
-    );
+    return $response;
 }

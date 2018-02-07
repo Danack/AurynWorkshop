@@ -15,7 +15,7 @@ function createApp(\Slim\Container $container, \Auryn\Injector $injector)
 {
     $resultMappers = [
         StubResponse::class => [StubResponseMapper::class, 'mapToPsr7Response'],
-        AurynWorkshop\Response::class => 'AurynWorkshopResponseMapper',
+        AurynWorkshop\Response::class => 'aurynWorkshopResponseMapper',
         ResponseInterface::class => function (
             ResponseInterface $controllerResult,
             ResponseInterface $originalResponse
@@ -69,8 +69,8 @@ function createApp(\Slim\Container $container, \Auryn\Injector $injector)
 
     //$app->add($injector->make(\AurynWorkshop\Middleware\LoginCheck::class));
 
-    $createRoutingMiddlewareFn = function (\AurynWorkshop\AdminSession $adminSession) use ($app, $injector) {
-        return new \AurynWorkshop\Middleware\UserTypeRouting($adminSession, $app, $injector);
+    $createRoutingMiddlewareFn = function (\AurynWorkshop\AurynWorkshopSession $awSession) use ($app, $injector) {
+        return new \AurynWorkshop\Middleware\UserTypeRouting($awSession, $app, $injector);
     };
 
     $routingMiddleware = $injector->execute($createRoutingMiddlewareFn);
@@ -91,7 +91,6 @@ function createApp(\Slim\Container $container, \Auryn\Injector $injector)
         //Not running in local dev, always have https available.
         $secure = true;
     }
-
 
     $app->add(new \AurynWorkshop\Middleware\Session([
         'name' => 'AurynWorkshop_session',
@@ -129,6 +128,20 @@ function createPDO()
 
 
 
+function createSqlitePDO()
+{
+    $dsn = sprintf("sqlite:%s", getConfig(['auryn_workshop', 'file_database', 'path']));
+    $pdo = new \PDO($dsn);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $createSQL = 'CREATE TABLE IF NOT EXISTS example_data (
+                        foo VARCHAR (255),
+                        bar VARCHAR (255)
+                      )';
+    $pdo->exec($createSQL);
+
+    return $pdo;
+}
+
 /**
  * @param \Auryn\Injector $injector
  * @param null $language
@@ -139,160 +152,60 @@ function createTwigForSite(\Auryn\Injector $injector) {
 
     $templatePaths[] = __DIR__ . '/../template';
 
-
-//    // The templates are included in order of priority.
-//    $templatePaths = [];
-//
-//    foreach ($baseTemplatePaths as $baseTemplatePath) {
-//        // Country + language path
-//        $templatePaths[] = sprintf(
-//            '%s/%s-%s',
-//            $baseTemplatePath,
-//            $userInfo->getCountryFromUrl(),
-//            $userInfo->getLanguageFromUrl()
-//        );
-//
-//        // url specific language
-//        if ($language !== null) {
-//            $templatePaths[] = $baseTemplatePath . '/' . $language;
-//        }
-//
-//        // site default language
-//        if (($siteLangauge = $siteConfig->getDefaultLanguage()) !== null) {
-//            if ($language !== $siteLangauge) {
-//                //prevent duplicating site language with user language
-//                $templatePaths[] = $baseTemplatePath . '/' . $siteLangauge;
-//            }
-//        }
-//
-//        // generic language
-//        $templatePaths[] = $baseTemplatePath;
-//    }
-//
-//    $existingTemplatePaths = [];
-//    foreach ($templatePaths as $templatePath) {
-//        if (is_dir($templatePath) === true) {
-//            $existingTemplatePaths[] = $templatePath;
-//        }
-//    }
-//
     $loader = new Twig_Loader_Filesystem($templatePaths);
     $twig = new Twig_Environment($loader, array(
         'cache' => false,
         'strict_variables' => true,
         'debug' => true
     ));
-//
-//    // Inject function - allows DI in templates.
-//    $function = new Twig_SimpleFunction('inject', function (string $type) use ($injector) {
-//        return $injector->make($type);
-//    });
-//    $twig->addFunction($function);
-//
-//
-//    $rawParams = ['is_safe' => array('html')];
-//
-//    // config function - allows keys to be embedded in templates.
-//    $function = new Twig_SimpleFunction('config', function (string $keyString) {
-//        $keyParts = explode(',', $keyString);
-//        return getConfig($keyParts);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    // getAssetVersion function
-//    $function = new Twig_SimpleFunction('getAssetVersion', 'getAssetVersionForServer');
-//    $twig->addFunction($function);
-//
-//
-//    $function = new Twig_SimpleFunction('print_donor_name', function (string $foundString, string $notFoundString) use ($injector) {
-//        $tll = $injector->make('AurynWorkshop\SiteComponent\UserData');
-//        return $tll->renderDonorName($foundString, $notFoundString);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//
-//    $function = new Twig_SimpleFunction('print_leadgen_name', function (string $foundString, string $notFoundString) use ($injector) {
-//        $tll = $injector->make('AurynWorkshop\SiteComponent\UserData');
-//        return $tll->renderLeadgenName($foundString, $notFoundString);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('stripeForm', function (string $formName) use ($injector) {
-//        $sfr = $injector->make('AurynWorkshop\SiteComponent\StripeFormRender');
-//        return $sfr->render($formName);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//
-//    $function = new Twig_SimpleFunction('stripeSubscriptionForm', function (string $formName) use ($injector) {
-//        $sfr = $injector->make('AurynWorkshop\SiteComponent\StripeFormRender');
-//        return $sfr->renderSubscription($formName);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('paypalOneOff', function (string $formName) use ($injector) {
-//        $sfr = $injector->make('AurynWorkshop\SiteComponent\StripeFormRender');
-//        return $sfr->renderPaypalOneOff($formName);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('stripeFormPublicKey', function (string $formName) use ($injector) {
-//        $sfr = $injector->make('AurynWorkshop\SiteComponent\StripeFormRender');
-//        return $sfr->renderKey($formName);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('paypalFormPublicKey', function (string $formName) use ($injector) {
-//        $sfr = $injector->make('AurynWorkshop\SiteComponent\PaypalFormRender');
-//        return $sfr->renderPublicKey($formName);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//
-//    // Content block function
-//    $function = new Twig_SimpleFunction('content_block', function (string $name) use ($injector) {
-//        $cbl = $injector->make('AurynWorkshop\Content\ContentBlockLoader');
-//        return $cbl->renderContentBlock($name);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    // Text label function
-//    $function = new Twig_SimpleFunction('text_label', function (string $name) use ($injector) {
-//        $tll = $injector->make('AurynWorkshop\Content\TextLabelLoader');
-//        return $tll->renderTextLabel($name);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('_', function (string $name) use ($injector) {
-//        $tll = $injector->make('AurynWorkshop\Content\TextLabelLoader');
-//        return $tll->renderTextLabel($name);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('memory_debug', function () {
-//        $memoryUsed = memory_get_usage(true);
-//        return "<!-- " . number_format($memoryUsed) . " -->";
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $function = new Twig_SimpleFunction('includeJavascript', function (string $jsFilename) use ($injector) {
-//        return includeJavascript($jsFilename);
-//    }, $rawParams);
-//    $twig->addFunction($function);
-//
-//    $twigFunctions = [
-//        'insert_currencies' => 'renderSiteCurrenciesAsJavascript',
-//        'render_site_data_layer' => 'AurynWorkshop\Component\DataLayerRender::render',
-//        'render_stripe_language' => 'AurynWorkshop\Component\StripeLanguageSetter::render',
-//        'render_paypal_language' => 'AurynWorkshop\Component\PaypalLanguageSetter::render',
-//    ];
-//
-//    foreach ($twigFunctions as $functionName => $callable) {
-//        $function = new Twig_SimpleFunction($functionName, function () use ($injector, $callable) {
-//            return $injector->execute($callable);
-//        });
-//        $twig->addFunction($function);
-//    }
+
+    // Inject function - allows DI in templates.
+    $function = new Twig_SimpleFunction('inject', function (string $type) use ($injector) {
+        return $injector->make($type);
+    });
+
+    $twig->addFunction($function);
 
     return $twig;
+}
+
+
+/**
+ * @return \Doctrine\ORM\EntityManager
+ */
+function createDoctrineEntityManager()
+{
+    $config = getConfig(['auryn_workshop', 'database']);
+
+    $connectionParams = array(
+        'dbname' => $config['schema'],
+        'user' => $config['username'],
+        'password' => $config['password'],
+        'host' => $config['host'],
+        'driver' => 'pdo_mysql',
+    );
+
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+        [__DIR__ . "/Aitekz/Model"],
+        true,
+        __DIR__ . "/../var/doctrine"
+    );
+
+    // TODO - precompile these in the build step.
+    // $config->setAutoGenerateProxyClasses(\Doctrine\Common\Proxy\AbstractProxyFactory::AUTOGENERATE_ALWAYS);
+
+    // obtaining the entity manager
+    return \Doctrine\ORM\EntityManager::create($connectionParams, $config);
+}
+
+
+/**
+ * @param Redis $redis
+ * @return \Birke\Rememberme\Authenticator
+ */
+function createRememberMeAuthenticator(Redis $redis)
+{
+    $storage = new \Birke\Rememberme\Storage\RedisStorage($redis, 'rememberme_');
+
+    return new \Birke\Rememberme\Authenticator($storage);
 }

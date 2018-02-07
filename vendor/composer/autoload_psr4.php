@@ -30,6 +30,7 @@ return array(
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib/Doctrine/Common'),
+    'Birke\\Rememberme\\' => array($baseDir . '/lib/birke/rememberme/src'),
     'Auryn\\' => array($vendorDir . '/rdlowrey/auryn/lib'),
     '' => array($vendorDir . '/bryanjhv/slim-session/src'),
 );

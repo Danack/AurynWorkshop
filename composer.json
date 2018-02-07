@@ -21,10 +21,14 @@
   },
   "autoload": {
     "files": [
+      "lib/bootstrap.php",
       "lib/functions.php"
     ],
     "psr-0": {
       "AurynWorkshop": "lib/"
+    },
+    "psr-4": {
+      "Birke\\Rememberme\\": "lib/birke/rememberme/src/"
     }
   }
 }

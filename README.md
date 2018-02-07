@@ -30,5 +30,3 @@ You will need to bring a laptop running `docker compose` e.g. Docker Community e
 
 docker exec -it aurynworkshop_web_1 php vendor/bin/phinx migrate
 docker exec -it aurynworkshop_web_1 php vendor/bin/phinx seed:run
-
-docker exec -it aurynworkshop_web_1 php vendor/bin/phinx seed:run

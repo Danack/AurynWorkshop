@@ -17,14 +17,15 @@ if (function_exists('injectionParams') == false) {
         // where they are required.
         $aliases = [
             AurynWorkshop\VariableMap::class => AurynWorkshop\VariableMap\Psr7VariableMap::class,
-            AurynWorkshop\Repo\UserAddRepo::class => \AurynWorkshop\Repo\AdminUserAddRepo\DoctrineUserAddRepo::class
+            AurynWorkshop\Repo\UserAddRepo::class => \AurynWorkshop\Repo\AdminUserAddRepo\DoctrineUserAddRepo::class,
+
         ];
 
         // Delegate the creation of types to callables.
         $delegates = [
-            \Psr\Log\LoggerInterface::class => 'createLogger',
+            // \Psr\Log\LoggerInterface::class => 'createLogger',
             \PDO::class => 'createPDO',
-            \Redis::class => 'createRedis',
+            // \Redis::class => 'createRedis',
             \Doctrine\ORM\EntityManager::class => 'createDoctrineEntityManager',
         ];
 

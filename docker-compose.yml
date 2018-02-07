@@ -37,5 +37,6 @@ services:
       FOO: "BAR"
     volumes:
       - ./:/var/www/
+      - ./config/localdev/nginx_default.conf:/etc/nginx/sites-available/default.conf
     ports:
       - "80:80"

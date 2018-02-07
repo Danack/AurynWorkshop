@@ -1,0 +1,52 @@
+
+
+
+<script type="application/javascript">
+
+  /**
+   * Setup a queue for stripe commands
+   */
+  if (window.hfQueueStripe == undefined) {
+    window.hfQueueStripe = function () {
+      (hfQueueStripe.q = hfQueueStripe.q || []).push(arguments)
+    };
+    window.hfQueueStripe.q = [];
+  }
+  hfQueueStripe.l = +new Date;
+
+
+  /**
+   * Setup a queue for jquery commands
+   */
+  if (window.hfQueueJquery == undefined) {
+    window.hfQueueJquery = function () {
+      (hfQueueJquery.q = hfQueueJquery.q || []).push(arguments)
+    };
+    window.hfQueueJquery.q = [];
+  }
+  hfQueueJquery.l = +new Date;
+
+
+  /**
+   * Add an external script to the page, and then call a callback once it is loaded.
+   *
+   * This is useful for scripts from outside companies where it is not possible to manage
+   * loading those scripts internally.
+   *
+   * https://stackoverflow.com/questions/12820953/asynchronous-script-loading-callback
+   * @param script_src
+   * @param callback
+   */
+  function async(script_src, callback) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src =  script_src;
+
+    if (callback) {
+      o.addEventListener('load', function (e) { callback(null, e); }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  }
+
+</script>

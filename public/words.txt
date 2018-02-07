@@ -1,147 +1,5 @@
 
 
-What is dependency injection
-
-* your code needs access to other services
-
-* three ways of getting them in
-  - global variables - bad because of state, or can be missed.
-  - service locators - better, but tie your code to the SL, annoying to test.
-  - parameter injection -
-
-* Variants on parameter injection
-  - comment/annotation based notes
-  - huge ass config file
-  - autowiring
-
-* Auryn is an autowiring recursive injector
-
-  - Looks at the parameters
-  - Figures out what is needed
-  - Goes away and makes the dependencies (recursively if needed)
-  - then creates the class or executes the function with those dependencies.
-  - to be clear Auryn can either just create objects, or execute functions/methods on objects.
-
-* Autowiring is awesome
-
-  - Splits concerns - instantiation of services separate from using them
-  - Write creation methods once
-  - Writing application code is really easy
-  - Writing tests very easy
-
-* Autowiring has limits
-
-  - Don't want to create types for every business case
-  - Don't want to move application logic into bootstrap layer
-
-
-* Only supported config format is code
-
-Seriously, don't use yaml.
-
-https://stackoverflow.com/questions/48490103/dependency-injection-of-filesystemcache-simplecache-in-symfony-4-0
-
-
-* Example named dependency
-
-function foo($serverRole) {
-    echo "The server role is " . $serverRole;
-}
-
-$injector->defineParam('serverRole', '')
-$injector->execute('foo');
-
-
-Auryn will:
-  - Look at what we're trying
-
-
-* Example class dependency
-
-class Bar {
-    public function getType() {
-        return "Bar";
-    }
-}
-
-function fooBar(Bar $bar)
-{
-    echo "I was a given a " . $bar->getType();
-}
-
-
-* Example class method dependency
-
-class Bar {
-    public function getType() {
-        return "Bar";
-    }
-}
-
-class Foo {
-    public function __construct($serverRole, Bar $bar) {
-        $this->serverRole = $serverRole;
-        $this->bar = $bar;
-    }
-
-    public function exec() {
-       echo "The server role is " . $serverRole;
-       echo "I was a given a " . $this->bar->getType();
-    }
-}
-
-$injector->defineParam('serverRole', '')
-$foo = $injector->make(Foo::class);
-$foo->exec();
-
-
-$injector->defineParam('serverRole', '')
-$foo = $injector->exec('Foo::exec');
-
-
-...so far so boring.
-
-
-* Sharing intro
-
-
-* Sharing for singletons
-
-class Foo {
-    static $count = 0;
-    public __construct() {
-        $this->count += 1;
-    }
-
-    public function getCount() {
-        return self::$count;
-   }
-}
-
-
-for ($i = 0; $i<10; $i++) {
-    $foo = $injector->make(Foo::class);
-    printf("Count is %d\n", $foo->getCount();
-}
-
-$injector->share(Foo::class)
-
-
-* Sharing for created objects
-
-
-class Foo {
-    public function __construct()
-    {
-    }
-}
-
-
-class Bar {
-
-}
-
-
 * Aliasing allows you to control
 
 
@@ -152,6 +10,10 @@ class Bar {
 
 
 * Prepare
+
+
+
+
 
 
 

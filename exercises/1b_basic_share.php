@@ -36,7 +36,10 @@ function writeOutput(Filename $filename)
 
 $injector = new Injector();
 
-
+// Task
+//
+// Share the filename object so that is is available to other code.
+// Then execute the 'writeOutput' function.
 
 // Solution
 $filename = new Filename(__DIR__ . '/../tmp/phpsw.txt');

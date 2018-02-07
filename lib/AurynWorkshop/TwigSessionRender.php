@@ -4,11 +4,11 @@
 namespace AurynWorkshop;
 
 use Twig_Environment as Twig;
-//use AurynWorkshop\App;
- use Psr\Http\Message\ResponseInterface as Response;
+use AurynWorkshop\App;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-//use SlimSession\Helper as Session;
-use AurynWorkshop\AdminSession;
+
+use AurynWorkshop\AurynWorkshopSession;
 use AurynWorkshop\SessionRender;
 
 /**
@@ -21,10 +21,10 @@ class TwigSessionRender implements SessionRender
     /** @var Twig  */
     private $twig;
 
-    /** @var AdminSession */
+    /** @var AurynWorkshopSession */
     private $session;
 
-    public function __construct(Twig $twig, AdminSession $session)
+    public function __construct(Twig $twig, AurynWorkshopSession $session)
     {
         $this->twig = $twig;
         $this->session = $session;
@@ -32,17 +32,17 @@ class TwigSessionRender implements SessionRender
 
     public function render($name, array $context = array())
     {
-        if ($this->session->hasFlashError() === true) {
-            $flashMessageError = $this->session->getFlashError();
-            $this->session->deleteFlashError();
-            $this->twig->addGlobal('flash_message_error', $flashMessageError);
-        }
+        $fn = function ($message) {
+            $this->twig->addGlobal(App::FLASH_MESSAGE_ERROR, $message);
+        };
+        $this->session->useFlashError($fn);
 
-        if ($this->session->hasFlashSuccess() === true) {
-            $flashMessageSuccess = $this->session->getFlashSuccess();
-            $this->session->deleteFlashSuccess();
-            $this->twig->addGlobal('flash_message_success', $flashMessageSuccess);
-        }
+        $fn = function ($message) {
+            $this->twig->addGlobal(App::FLASH_MESSAGE_SUCCESS, $message);
+        };
+        $this->session->useFlashSuccess($fn);
+
+
 
         return $this->twig->render($name, $context);
     }
