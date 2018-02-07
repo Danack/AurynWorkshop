@@ -1,0 +1,63 @@
+{% extends 'admin/base.html' %}
+
+
+{% block page_body %}
+
+{% block links %}
+<aside class="left-sidebar">
+  <div class="logo">
+    <a href="/"><img src="/img/dijon-logo.png" alt="Dijon" height="44px"/></a>
+  </div>
+  <div class="scroll-sidebar">
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        {% set content = inject('Dijon\\Component\\AdminLinks') %}
+        {{ content.render()|raw }}
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+{% endblock %}
+
+
+
+<div class="page-wrapper">
+  <div class="col-md-12 col-lg-10 col-lg-offset-1">
+    <div class="container-fluid ">
+      {# % block breadcrumb % #}
+      {# % set breadCrumbs = inject('Dijon\\Component\\AdminBreadcrumbs') % #}
+      {#  { breadCrumbs.render() | raw } #}
+      {# % endblock % #}
+
+
+      <div>
+        {% if flash_message is defined %}
+          {% if flash_message is not empty %}
+          <div style="margin: 0px;" >
+            <p class="login-error text-center">
+              <span class="alert alert-danger">{{ flash_message }}</span>
+            </p>
+          </div>
+          {% endif %}
+        {% endif %}
+
+        {% if flash_message_success is defined %}
+          {% if flash_message_success is not empty %}
+          <div style="margin: 0px;" >
+            <p class="text-center">
+              <span class="alert alert-success">{{ flash_message_success }}</span>
+            </p>
+          </div>
+          {% endif %}
+        {% endif %}
+
+        {% block content %}
+            Admin content.
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

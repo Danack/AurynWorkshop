@@ -1,0 +1,30 @@
+{
+  "require": {
+    "roave/security-advisories": "dev-master",
+    "bryanjhv/slim-session": "^3.2",
+    "danack/console": "^2.6",
+    "danack/AurynConfig": "^0.9.1",
+    "danack/slim-auryn-invoker": "^1.1.0",
+    "doctrine/orm": "v2.5.6",
+    "ezimuel/php-secure-session": "v1.0.1",
+    "monolog/monolog": "^1.23",
+    "rdlowrey/auryn": "^1.4",
+    "robmorgan/phinx": "0.8.1",
+    "twig/twig": "^1.33",
+    "stadline/monolog-echo-handler": "^0.2.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "0.9.*",
+    "phpunit/phpunit": "4.5.*",
+    "squizlabs/php_codesniffer": "^2.8",
+    "zendframework/zend-diactoros": "^1.3"
+  },
+  "autoload": {
+    "files": [
+      "lib/functions.php"
+    ],
+    "psr-0": {
+      "AurynWorkshop": "lib/"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "stadline/monolog-echo-handler",
+    "description": "A handler for Monolog that sends messages with php://output.",
+    "keywords": ["monolog", "log", "echo", "output"],
+    "homepage": "https://github.com/stadline/monolog-echo-handler",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Stadline",
+			"email": "contact@stadline.com",
+            "homepage": "http://www.stadline.com",
+            "role": "Company"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "monolog/monolog": "~1.6"
+    },
+    "autoload": {
+        "psr-0": {"Monolog": "src/"}
+    }
+}
